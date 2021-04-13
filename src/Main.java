@@ -6,10 +6,11 @@ import java.util.zip.ZipOutputStream;
 
 public class Main {
 
-    private static String saveGamesPath = "/Users/elina.agapova/NTLG/Games/savegames/";
+    public static String saveGamesPath = "/Users/elina.agapova/NTLG/Games/savegames/";
+    public static String zippedSavingsPath = saveGamesPath + "allStations.zip";
 
     public static String zipSavings(String[] savings) {
-        try (ZipOutputStream zout = new ZipOutputStream(new FileOutputStream(saveGamesPath + "allStations.zip"))) {
+        try (ZipOutputStream zout = new ZipOutputStream(new FileOutputStream(zippedSavingsPath))) {
             for (String saving: savings) {
                 FileInputStream savingFIS = new FileInputStream(saving);
                 ZipEntry savingEntry = new ZipEntry(saving.substring(saving.lastIndexOf("/")+1));
@@ -55,5 +56,11 @@ public class Main {
         //Удалить файлы сохранений, лежащие вне архива.
        removeUnZippedSavings(savings);
 
+       //Задача 3: Произвести распаковку архива в папке savegames.
+        Loading.unZip(zippedSavingsPath, saveGamesPath);
+
+        //Задача 3:Произвести считывание и десериализацию одного из разархивированных файлов save.dat
+        // и вывести в консоль состояние сохранненой игры.
+        System.out.println(Loading.openProgress(savings[0]));
     }
 }
