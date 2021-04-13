@@ -31,8 +31,9 @@ public class Main {
     public static void removeUnZippedSavings(String[] savings) {
         for (String saving: savings) {
             File savingFile = new File(saving);
-            if (savingFile.delete())
+            if (savingFile.delete()) {
                 System.out.printf("Файл \"%s\" успешно удален\n", saving.substring(saving.lastIndexOf("/")+1));
+            }
         }
     }
 
